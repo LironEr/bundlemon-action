@@ -1,0 +1,11 @@
+{
+  "verbose": true,
+  "baseDir": "./dist",
+  "files": [
+    {
+      "path": "index.js"
+    }
+  ],
+  "defaultCompression": "none",
+  "reportOutput": ["github"]
+}

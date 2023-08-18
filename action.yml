@@ -1,0 +1,19 @@
+name: 'bundlemon'
+description: 'Run BundleMon CLI to check for bundle size changes'
+author: 'LironEr'
+branding:
+  icon: 'activity'
+  color: 'green'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+inputs:
+  bundlemon-args:
+    required: false
+    description: 'Optional args for BundleMon cli. Example: --subProject "some-name"'
+  bundlemon-version:
+    required: false
+    description: 'BundleMon cli version, if not specified will use latest'
+  working-directory:
+    required: false
+    description: 'The working directory'
