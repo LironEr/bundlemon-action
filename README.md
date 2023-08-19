@@ -40,7 +40,7 @@ jobs:
         run: yarn build
 
       - name: BundleMon
-        uses: lironer/bundlemon@v1
+        uses: lironer/bundlemon-action@v1
 ```
 
 ### Example run BundleMon on multiple projects
@@ -71,12 +71,12 @@ jobs:
         run: yarn build
 
       - name: BundleMon Project A
-        uses: lironer/bundlemon@v1
+        uses: lironer/bundlemon-action@v1
         with:
           bundlemon-args: --config project-a-config.json --subProject "project-a"
 
       - name: BundleMon Project B
-        uses: lironer/bundlemon@v1
+        uses: lironer/bundlemon-action@v1
         with:
           bundlemon-args: --config project-b-config.json --subProject "project-b"
 ```
