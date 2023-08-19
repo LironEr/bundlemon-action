@@ -1,5 +1,5 @@
-name: 'bundlemon'
-description: 'Run BundleMon CLI to check for bundle size changes'
+name: 'BundleMon'
+description: 'A free open-source tool that helps you to monitor your bundle size on every commit and alerts you on changes.'
 author: 'LironEr'
 branding:
   icon: 'activity'

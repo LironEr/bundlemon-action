@@ -4,15 +4,19 @@
 
 # BundleMon GitHub Action
 
+Easily use [BundleMon](https://github.com/LironEr/bundlemon) to monitor your bundle size on every commit from GitHub Actions
+
 ## Inputs
 
 | Name              | Required | Default        | Description                                                        |
 | ----------------- | :------: | -------------- | ------------------------------------------------------------------ |
-| bundlemon-args    |    -     |                | Optional args for BundleMon cli. Example: --subProject "some-name" |
+| bundlemon-args    |    -     |                | Optional args for [BundleMon cli](https://github.com/LironEr/bundlemon#cli-usage). Example: --subProject "some-name" |
 | bundlemon-version |    -     | Latest version | BundleMon cli version                                              |
 | working-directory |    -     |                | The working directory                                              |
 
 ## Usage
+
+BundleMon config must be present to run this action, See [BundleMon setup](https://github.com/LironEr/bundlemon#setup) for more info.
 
 ```yaml
 name: Build
