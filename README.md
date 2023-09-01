@@ -8,11 +8,12 @@ Easily use [BundleMon](https://github.com/LironEr/bundlemon) to monitor your bun
 
 ## Inputs
 
-| Name              | Required | Default        | Description                                                        |
-| ----------------- | :------: | -------------- | ------------------------------------------------------------------ |
+| Name              | Required | Default        | Description                                                                                                          |
+| ----------------- | :------: | -------------- | -------------------------------------------------------------------------------------------------------------------- |
 | bundlemon-args    |    -     |                | Optional args for [BundleMon cli](https://github.com/LironEr/bundlemon#cli-usage). Example: --subProject "some-name" |
-| bundlemon-version |    -     | Latest version | BundleMon cli version                                              |
-| working-directory |    -     |                | The working directory                                              |
+| bundlemon-version |    -     | Latest version | BundleMon cli version                                                                                                |
+| working-directory |    -     |                | The working directory                                                                                                |
+| fail-on-error     |    -     | `true`         | Should fail on error                                                                                                 |
 
 ## Usage
 

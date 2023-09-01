@@ -17,3 +17,6 @@ inputs:
   working-directory:
     required: false
     description: 'The working directory'
+  fail-on-error:
+    required: false
+    description: 'Should fail on error'
