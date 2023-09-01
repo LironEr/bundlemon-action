@@ -44,13 +44,20 @@ const exec = __importStar(__nccwpck_require__(1514));
 const github_1 = __nccwpck_require__(5438);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
+        const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
         try {
             setEnvVars();
             yield runCli();
         }
         catch (error) {
-            if (error instanceof Error)
-                core.setFailed(error.message);
+            if (error instanceof Error) {
+                if (shouldFail) {
+                    core.setFailed(error.message);
+                }
+                else {
+                    core.error(error.message);
+                }
+            }
         }
     });
 }
