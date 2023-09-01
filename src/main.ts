@@ -3,12 +3,20 @@ import * as exec from '@actions/exec';
 import { context } from '@actions/github';
 
 async function run(): Promise<void> {
+  const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
+
   try {
     setEnvVars();
 
     await runCli();
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+    if (error instanceof Error) {
+      if (shouldFail) {
+        core.setFailed(error.message);
+      } else {
+        core.error(error.message);
+      }
+    }
   }
 }
 

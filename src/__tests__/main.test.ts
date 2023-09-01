@@ -22,6 +22,8 @@ const execCommand = async (
     });
 
     childProcess.on('close', (code) => {
+      console.log(stdout);
+      console.log(stderr);
       resolve({ stdout, stderr, code });
     });
 
@@ -59,5 +61,19 @@ describe('action', () => {
 
     expect(code).toBe(0);
     expect(stdout).toContain('2.0.0');
+  });
+
+  test('fail on error - false', async () => {
+    const extraEnv = {
+      'INPUT_BUNDLEMON-ARGS': '--config not-found.json',
+      'INPUT_FAIL-ON-ERROR': 'false',
+    };
+
+    const { code, stdout } = await execCommand(process.execPath, [MAIN_ACTION_FILE], {
+      env: { ...process.env, ...extraEnv },
+    });
+
+    expect(code).toBe(0);
+    expect(stdout).toContain('no such file or directory');
   });
 });
