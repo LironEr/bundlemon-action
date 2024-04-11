@@ -47,12 +47,13 @@ jobs:
 
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@5f865e4ca373f189640721c0cca04ea3e0e7bfcd # v4.0.0
+        uses: TriPSs/conventional-changelog-action@f04dac1fd07687cec8ea302937ca588b33786e98 # v5.2.1
         with:
+          preset: 'conventionalcommits'
           output-file: 'false'
 
       - name: Create Release
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
+        uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564 # v2.0.4
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
@@ -62,7 +63,7 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
       - name: Update major tag
-        uses: actions/publish-action@dca2315f75060c81e52b00dfc86b660107013642 # v0.2.2
+        uses: actions/publish-action@f784495ce78a41bac4ed7e34a73f0034015764bb # v0.3.0
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           source-tag: ${{ steps.changelog.outputs.tag }}
