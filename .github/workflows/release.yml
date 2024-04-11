@@ -3,10 +3,10 @@ name: release
 on:
   workflow_dispatch:
 
-permissions:
-  contents: write # to be able to publish a GitHub release
-  issues: write # to be able to comment on released issues
-  pull-requests: write # to be able to comment on released pull requests
+# permissions:
+#   contents: write # to be able to publish a GitHub release
+#   issues: write # to be able to comment on released issues
+#   pull-requests: write # to be able to comment on released pull requests
 
 jobs:
   release:
@@ -49,5 +49,5 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: yarn release
