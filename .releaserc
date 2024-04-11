@@ -19,7 +19,52 @@
         ]
       }
     ],
-    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "parserOpts": {
+          "noteKeywords": [
+            "BREAKING CHANGE",
+            "BREAKING CHANGES",
+            "BREAKING"
+          ]
+        },
+        "presetConfig": {
+          "types": [
+            {
+              "type": "breaking",
+              "section": "❗ BREAKING CHANGES ❗",
+              "hidden": false
+            },
+            {
+              "type": "feat",
+              "section": "✨ Features",
+              "hidden": false
+            },
+            {
+              "type": "fix",
+              "section": "🐛 Fixes",
+              "hidden": false
+            },
+            {
+              "type": "chore",
+              "section": "🔨  Misc.",
+              "hidden": false
+            },
+            {
+              "type": "docs",
+              "section": "📝  Documentation",
+              "hidden": false
+            },
+            {
+              "type": "refactor",
+              "section": "⚡️ Refactor",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    ],
     "@semantic-release/github",
     "semantic-release-major-tag"
   ]
