@@ -45,25 +45,7 @@ jobs:
           name: dist
           path: dist/
 
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@f04dac1fd07687cec8ea302937ca588b33786e98 # v5.2.1
-        with:
-          preset: 'conventionalcommits'
-          output-file: 'false'
-
-      - name: Create Release
-        uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564 # v2.0.4
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+      - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
-        with:
-          name: ${{ steps.changelog.outputs.tag }}
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
-
-      - name: Update major tag
-        uses: actions/publish-action@f784495ce78a41bac4ed7e34a73f0034015764bb # v0.3.0
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        with:
-          source-tag: ${{ steps.changelog.outputs.tag }}
+        run: yarn release
