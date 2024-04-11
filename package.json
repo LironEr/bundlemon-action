@@ -29,6 +29,7 @@
     "@actions/github": "^6.0.0"
   },
   "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
     "@types/node": "^20",
     "@typescript-eslint/parser": "^6.18.1",
     "@vercel/ncc": "^0.38.1",
