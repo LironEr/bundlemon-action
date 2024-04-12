@@ -10,6 +10,7 @@
     [
       "@semantic-release/commit-analyzer",
       {
+        "preset": "conventionalcommits",
         "releaseRules": [
           {
             "type": "chore",
@@ -29,6 +30,7 @@
             "BREAKING"
           ]
         },
+        "preset": "conventionalcommits",
         "presetConfig": {
           "types": [
             {
@@ -48,7 +50,7 @@
             },
             {
               "type": "chore",
-              "section": "🔨  Misc.",
+              "section": "🛠  Misc.",
               "hidden": false
             },
             {
