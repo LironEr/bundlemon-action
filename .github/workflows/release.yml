@@ -14,6 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # https://github.com/semantic-release/semantic-release/blob/278d8e6bec766ba694aa00f5503fb49df753f4b8/docs/recipes/ci-configurations/github-actions.md#pushing-packagejson-changes-to-a-master-branch
+          persist-credentials: false
 
       - name: Set Node.js 20.x
         uses: actions/setup-node@v4
