@@ -1,6 +1,6 @@
 {
   "name": "bundlemon-action",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "description": "BundleMon GitHub action",
   "main": "lib/main.js",
