@@ -50,6 +50,7 @@ function run() {
             yield runCli();
         }
         catch (error) {
+            core.error('Error occurred while running BundleMon CLI');
             if (error instanceof Error) {
                 if (shouldFail) {
                     core.setFailed(error.message);
@@ -63,17 +64,17 @@ function run() {
 }
 function setEnvVars() {
     var _a, _b;
-    core.info('set environment vars for BundleMon cli');
+    core.info('set environment vars for BundleMon CLI');
     const { payload } = github_1.context;
     const pr = payload.pull_request;
     const commitSha = ((_a = pr === null || pr === void 0 ? void 0 : pr.head) === null || _a === void 0 ? void 0 : _a.sha) || github_1.context.sha;
     const commitMsg = ((_b = github_1.context.payload.head_commit) === null || _b === void 0 ? void 0 : _b.message) || '';
     if (commitSha) {
-        core.info('set env variable : CI_COMMIT_SHA');
+        core.info('set env variable: CI_COMMIT_SHA');
         core.exportVariable('CI_COMMIT_SHA', commitSha);
     }
     if (commitMsg) {
-        core.info('set env variable : CI_COMMIT_MESSAGE');
+        core.info('set env variable: CI_COMMIT_MESSAGE');
         core.exportVariable('CI_COMMIT_MESSAGE', commitMsg);
     }
 }
@@ -111,8 +112,10 @@ function runCli() {
         };
         if (workingDirectory) {
             options.cwd = workingDirectory;
+            core.info(`Working directory: ${workingDirectory}`);
         }
         const args = [getBundlemonBin(), ...bundlemonArgs];
+        core.info(`Running: npx ${args.join(' ')}`);
         yield exec.exec('npx', args, options);
     });
 }
