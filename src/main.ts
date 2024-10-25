@@ -10,6 +10,8 @@ async function run(): Promise<void> {
 
     await runCli();
   } catch (error) {
+    core.error('Error occurred while running BundleMon CLI');
+
     if (error instanceof Error) {
       if (shouldFail) {
         core.setFailed(error.message);
@@ -21,7 +23,7 @@ async function run(): Promise<void> {
 }
 
 function setEnvVars() {
-  core.info('set environment vars for BundleMon cli');
+  core.info('set environment vars for BundleMon CLI');
 
   const { payload } = context;
   const pr = payload.pull_request;
@@ -30,12 +32,12 @@ function setEnvVars() {
   const commitMsg = context.payload.head_commit?.message || '';
 
   if (commitSha) {
-    core.info('set env variable : CI_COMMIT_SHA');
+    core.info('set env variable: CI_COMMIT_SHA');
     core.exportVariable('CI_COMMIT_SHA', commitSha);
   }
 
   if (commitMsg) {
-    core.info('set env variable : CI_COMMIT_MESSAGE');
+    core.info('set env variable: CI_COMMIT_MESSAGE');
     core.exportVariable('CI_COMMIT_MESSAGE', commitMsg);
   }
 }
@@ -78,9 +80,12 @@ async function runCli() {
 
   if (workingDirectory) {
     options.cwd = workingDirectory;
+    core.info(`Working directory: ${workingDirectory}`);
   }
 
   const args = [getBundlemonBin(), ...bundlemonArgs];
+
+  core.info(`Running: npx ${args.join(' ')}`);
 
   await exec.exec('npx', args, options);
 }
