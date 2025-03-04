@@ -1,129 +1,6 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 3109:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(2186));
-const exec = __importStar(__nccwpck_require__(1514));
-const github_1 = __nccwpck_require__(5438);
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
-        try {
-            setEnvVars();
-            yield runCli();
-        }
-        catch (error) {
-            core.error('Error occurred while running BundleMon CLI');
-            if (error instanceof Error) {
-                if (shouldFail) {
-                    core.setFailed(error.message);
-                }
-                else {
-                    core.error(error.message);
-                }
-            }
-        }
-    });
-}
-function setEnvVars() {
-    var _a, _b;
-    core.info('set environment vars for BundleMon CLI');
-    const { payload } = github_1.context;
-    const pr = payload.pull_request;
-    const commitSha = ((_a = pr === null || pr === void 0 ? void 0 : pr.head) === null || _a === void 0 ? void 0 : _a.sha) || github_1.context.sha;
-    const commitMsg = ((_b = github_1.context.payload.head_commit) === null || _b === void 0 ? void 0 : _b.message) || '';
-    if (commitSha) {
-        core.info('set env variable: CI_COMMIT_SHA');
-        core.exportVariable('CI_COMMIT_SHA', commitSha);
-    }
-    if (commitMsg) {
-        core.info('set env variable: CI_COMMIT_MESSAGE');
-        core.exportVariable('CI_COMMIT_MESSAGE', commitMsg);
-    }
-}
-function parseArgs(input) {
-    var _a;
-    if (!input) {
-        return [];
-    }
-    const regex = new RegExp('"[^"]+"|[\\S]+', 'g');
-    const args = [];
-    (_a = input.match(regex)) === null || _a === void 0 ? void 0 : _a.forEach((element) => {
-        if (!element)
-            return;
-        return args.push(element.replace(/"/g, ''));
-    });
-    return args;
-}
-function getBundlemonBin() {
-    const version = core.getInput('bundlemon-version');
-    return 'bundlemon'.concat(version ? `@${version}` : '');
-}
-function runCli() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const workingDirectory = core.getInput('working-directory');
-        const bundlemonArgs = parseArgs(core.getInput('bundlemon-args'));
-        const options = {
-            listeners: {
-                stdout: (data) => {
-                    core.info(data.toString());
-                },
-                stderr: (data) => {
-                    core.info(data.toString());
-                },
-            },
-        };
-        if (workingDirectory) {
-            options.cwd = workingDirectory;
-            core.info(`Working directory: ${workingDirectory}`);
-        }
-        const args = [getBundlemonBin(), ...bundlemonArgs];
-        core.info(`Running: npx ${args.join(' ')}`);
-        yield exec.exec('npx', args, options);
-    });
-}
-run();
-
-
-/***/ }),
-
 /***/ 7351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -30478,6 +30355,133 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__nccwpck_require__(2186));
+const exec = __importStar(__nccwpck_require__(1514));
+const github_1 = __nccwpck_require__(5438);
+const package_manager_detector_1 = __nccwpck_require__(8509);
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
+        try {
+            setEnvVars();
+            yield runCli();
+        }
+        catch (error) {
+            core.error('Error occurred while running BundleMon CLI');
+            if (error instanceof Error) {
+                if (shouldFail) {
+                    core.setFailed(error.message);
+                }
+                else {
+                    core.error(error.message);
+                }
+            }
+        }
+    });
+}
+function setEnvVars() {
+    var _a, _b;
+    core.info('set environment vars for BundleMon CLI');
+    const { payload } = github_1.context;
+    const pr = payload.pull_request;
+    const commitSha = ((_a = pr === null || pr === void 0 ? void 0 : pr.head) === null || _a === void 0 ? void 0 : _a.sha) || github_1.context.sha;
+    const commitMsg = ((_b = github_1.context.payload.head_commit) === null || _b === void 0 ? void 0 : _b.message) || '';
+    if (commitSha) {
+        core.info('set env variable: CI_COMMIT_SHA');
+        core.exportVariable('CI_COMMIT_SHA', commitSha);
+    }
+    if (commitMsg) {
+        core.info('set env variable: CI_COMMIT_MESSAGE');
+        core.exportVariable('CI_COMMIT_MESSAGE', commitMsg);
+    }
+}
+function parseArgs(input) {
+    var _a;
+    if (!input) {
+        return [];
+    }
+    const regex = new RegExp('"[^"]+"|[\\S]+', 'g');
+    const args = [];
+    (_a = input.match(regex)) === null || _a === void 0 ? void 0 : _a.forEach((element) => {
+        if (!element)
+            return;
+        return args.push(element.replace(/"/g, ''));
+    });
+    return args;
+}
+function getBundlemonBin() {
+    const version = core.getInput('bundlemon-version');
+    return 'bundlemon'.concat(version ? `@${version}` : '');
+}
+function runCli() {
+    var _a;
+    return __awaiter(this, void 0, void 0, function* () {
+        const workingDirectory = core.getInput('working-directory');
+        const bundlemonArgs = parseArgs(core.getInput('bundlemon-args'));
+        const options = {
+            listeners: {
+                stdout: (data) => {
+                    core.info(data.toString());
+                },
+                stderr: (data) => {
+                    core.info(data.toString());
+                },
+            },
+        };
+        if (workingDirectory) {
+            options.cwd = workingDirectory;
+            core.info(`Working directory: ${workingDirectory}`);
+        }
+        const args = [getBundlemonBin(), ...bundlemonArgs];
+        const pm = yield (0, package_manager_detector_1.detect)();
+        const command = (0, package_manager_detector_1.resolveCommand)((_a = pm === null || pm === void 0 ? void 0 : pm.agent) !== null && _a !== void 0 ? _a : 'npm', 'execute', args);
+        core.info(`Running: ${command.command} ${command.args.join(' ')}`);
+        yield exec.exec(command.command, command.args, options);
+    });
+}
+run();
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -30587,6 +30591,30 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:events");
+
+/***/ }),
+
+/***/ 7561:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs");
+
+/***/ }),
+
+/***/ 9411:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
+
+/***/ }),
+
+/***/ 7742:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:process");
 
 /***/ }),
 
@@ -32335,6 +32363,446 @@ function parseParams (str) {
 module.exports = parseParams
 
 
+/***/ }),
+
+/***/ 8231:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+function npmRun(agent) {
+  return (args) => {
+    if (args.length > 1) {
+      return [agent, "run", args[0], "--", ...args.slice(1)];
+    } else {
+      return [agent, "run", args[0]];
+    }
+  };
+}
+function denoExecute() {
+  return (args) => {
+    return ["deno", "run", `npm:${args[0]}`, ...args.slice(1)];
+  };
+}
+const npm = {
+  "agent": ["npm", 0],
+  "run": npmRun("npm"),
+  "install": ["npm", "i", 0],
+  "frozen": ["npm", "ci", 0],
+  "global": ["npm", "i", "-g", 0],
+  "add": ["npm", "i", 0],
+  "upgrade": ["npm", "update", 0],
+  "upgrade-interactive": null,
+  "execute": ["npx", 0],
+  "execute-local": ["npx", 0],
+  "uninstall": ["npm", "uninstall", 0],
+  "global_uninstall": ["npm", "uninstall", "-g", 0]
+};
+const yarn = {
+  "agent": ["yarn", 0],
+  "run": ["yarn", "run", 0],
+  "install": ["yarn", "install", 0],
+  "frozen": ["yarn", "install", "--frozen-lockfile", 0],
+  "global": ["yarn", "global", "add", 0],
+  "add": ["yarn", "add", 0],
+  "upgrade": ["yarn", "upgrade", 0],
+  "upgrade-interactive": ["yarn", "upgrade-interactive", 0],
+  "execute": ["npx", 0],
+  "execute-local": ["yarn", "exec", 0],
+  "uninstall": ["yarn", "remove", 0],
+  "global_uninstall": ["yarn", "global", "remove", 0]
+};
+const yarnBerry = {
+  ...yarn,
+  "frozen": ["yarn", "install", "--immutable", 0],
+  "upgrade": ["yarn", "up", 0],
+  "upgrade-interactive": ["yarn", "up", "-i", 0],
+  "execute": ["yarn", "dlx", 0],
+  "execute-local": ["yarn", "exec", 0],
+  // Yarn 2+ removed 'global', see https://github.com/yarnpkg/berry/issues/821
+  "global": ["npm", "i", "-g", 0],
+  "global_uninstall": ["npm", "uninstall", "-g", 0]
+};
+const pnpm = {
+  "agent": ["pnpm", 0],
+  "run": ["pnpm", "run", 0],
+  "install": ["pnpm", "i", 0],
+  "frozen": ["pnpm", "i", "--frozen-lockfile", 0],
+  "global": ["pnpm", "add", "-g", 0],
+  "add": ["pnpm", "add", 0],
+  "upgrade": ["pnpm", "update", 0],
+  "upgrade-interactive": ["pnpm", "update", "-i", 0],
+  "execute": ["pnpm", "dlx", 0],
+  "execute-local": ["pnpm", "exec", 0],
+  "uninstall": ["pnpm", "remove", 0],
+  "global_uninstall": ["pnpm", "remove", "--global", 0]
+};
+const bun = {
+  "agent": ["bun", 0],
+  "run": ["bun", "run", 0],
+  "install": ["bun", "install", 0],
+  "frozen": ["bun", "install", "--frozen-lockfile", 0],
+  "global": ["bun", "add", "-g", 0],
+  "add": ["bun", "add", 0],
+  "upgrade": ["bun", "update", 0],
+  "upgrade-interactive": ["bun", "update", 0],
+  "execute": ["bun", "x", 0],
+  "execute-local": ["bun", "x", 0],
+  "uninstall": ["bun", "remove", 0],
+  "global_uninstall": ["bun", "remove", "-g", 0]
+};
+const deno = {
+  "agent": ["deno", 0],
+  "run": ["deno", "task", 0],
+  "install": ["deno", "install", 0],
+  "frozen": ["deno", "install", "--frozen", 0],
+  "global": ["deno", "install", "-g", 0],
+  "add": ["deno", "add", 0],
+  "upgrade": ["deno", "outdated", "--update", 0],
+  "upgrade-interactive": ["deno", "outdated", "--update", 0],
+  "execute": denoExecute(),
+  "execute-local": ["deno", "task", "--eval", 0],
+  "uninstall": ["deno", "remove", 0],
+  "global_uninstall": ["deno", "uninstall", "-g", 0]
+};
+const COMMANDS = {
+  "npm": npm,
+  "yarn": yarn,
+  "yarn@berry": yarnBerry,
+  "pnpm": pnpm,
+  // pnpm v6.x or below
+  "pnpm@6": {
+    ...pnpm,
+    run: npmRun("pnpm")
+  },
+  "bun": bun,
+  "deno": deno
+};
+function resolveCommand(agent, command, args) {
+  const value = COMMANDS[agent][command];
+  return constructCommand(value, args);
+}
+function constructCommand(value, args) {
+  if (value == null)
+    return null;
+  const list = typeof value === "function" ? value(args) : value.flatMap((v) => {
+    if (typeof v === "number")
+      return args;
+    return [v];
+  });
+  return {
+    command: list[0],
+    args: list.slice(1)
+  };
+}
+
+exports.COMMANDS = COMMANDS;
+exports.constructCommand = constructCommand;
+exports.resolveCommand = resolveCommand;
+
+
+/***/ }),
+
+/***/ 6980:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+const AGENTS = [
+  "npm",
+  "yarn",
+  "yarn@berry",
+  "pnpm",
+  "pnpm@6",
+  "bun",
+  "deno"
+];
+const LOCKS = {
+  "bun.lock": "bun",
+  "bun.lockb": "bun",
+  "deno.lock": "deno",
+  "pnpm-lock.yaml": "pnpm",
+  "yarn.lock": "yarn",
+  "package-lock.json": "npm",
+  "npm-shrinkwrap.json": "npm"
+};
+const INSTALL_PAGE = {
+  "bun": "https://bun.sh",
+  "deno": "https://deno.com",
+  "pnpm": "https://pnpm.io/installation",
+  "pnpm@6": "https://pnpm.io/6.x/installation",
+  "yarn": "https://classic.yarnpkg.com/en/docs/install",
+  "yarn@berry": "https://yarnpkg.com/getting-started/install",
+  "npm": "https://docs.npmjs.com/cli/configuring-npm/install"
+};
+
+exports.AGENTS = AGENTS;
+exports.INSTALL_PAGE = INSTALL_PAGE;
+exports.LOCKS = LOCKS;
+
+
+/***/ }),
+
+/***/ 4875:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const fs = __nccwpck_require__(7561);
+const path = __nccwpck_require__(9411);
+const process = __nccwpck_require__(7742);
+const macro = __nccwpck_require__(5921);
+const constants = __nccwpck_require__(6980);
+
+function _interopDefaultCompat (e) { return e && typeof e === 'object' && 'default' in e ? e.default : e; }
+
+const fs__default = /*#__PURE__*/_interopDefaultCompat(fs);
+const path__default = /*#__PURE__*/_interopDefaultCompat(path);
+const process__default = /*#__PURE__*/_interopDefaultCompat(process);
+
+const isFile = macro.quansync({
+  sync: (path2) => {
+    try {
+      return fs__default.statSync(path2).isFile();
+    } catch {
+      return false;
+    }
+  },
+  async: async (path2) => {
+    try {
+      return (await fs__default.promises.stat(path2)).isFile();
+    } catch {
+      return false;
+    }
+  }
+});
+function getUserAgent() {
+  const userAgent = process__default.env.npm_config_user_agent;
+  if (!userAgent) {
+    return null;
+  }
+  const name = userAgent.split("/")[0];
+  return constants.AGENTS.includes(name) ? name : null;
+}
+function* lookup(cwd = process__default.cwd()) {
+  let directory = path__default.resolve(cwd);
+  const { root } = path__default.parse(directory);
+  while (directory && directory !== root) {
+    yield directory;
+    directory = path__default.dirname(directory);
+  }
+}
+const parsePackageJson = macro.quansync(function* (filepath, onUnknown) {
+  return !filepath || !(yield isFile(filepath)) ? null : handlePackageManager(filepath, onUnknown);
+});
+const detect = macro.quansync(function* (options = {}) {
+  const { cwd, onUnknown } = options;
+  for (const directory of lookup(cwd)) {
+    for (const lock of Object.keys(constants.LOCKS)) {
+      if (yield isFile(path__default.join(directory, lock))) {
+        const name = constants.LOCKS[lock];
+        const result2 = yield parsePackageJson(path__default.join(directory, "package.json"), onUnknown);
+        if (result2)
+          return result2;
+        else
+          return { name, agent: name };
+      }
+    }
+    const result = yield parsePackageJson(path__default.join(directory, "package.json"), onUnknown);
+    if (result)
+      return result;
+  }
+  return null;
+});
+const detectSync = detect.sync;
+function handlePackageManager(filepath, onUnknown) {
+  try {
+    const pkg = JSON.parse(fs__default.readFileSync(filepath, "utf8"));
+    let agent;
+    if (typeof pkg.packageManager === "string") {
+      const [name, ver] = pkg.packageManager.replace(/^\^/, "").split("@");
+      let version = ver;
+      if (name === "yarn" && Number.parseInt(ver) > 1) {
+        agent = "yarn@berry";
+        version = "berry";
+        return { name, agent, version };
+      } else if (name === "pnpm" && Number.parseInt(ver) < 7) {
+        agent = "pnpm@6";
+        return { name, agent, version };
+      } else if (constants.AGENTS.includes(name)) {
+        agent = name;
+        return { name, agent, version };
+      } else {
+        return onUnknown?.(pkg.packageManager) ?? null;
+      }
+    }
+  } catch {
+  }
+  return null;
+}
+
+exports.detect = detect;
+exports.detectSync = detectSync;
+exports.getUserAgent = getUserAgent;
+
+
+/***/ }),
+
+/***/ 8509:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const commands = __nccwpck_require__(8231);
+const constants = __nccwpck_require__(6980);
+const detect = __nccwpck_require__(4875);
+__nccwpck_require__(7561);
+__nccwpck_require__(9411);
+__nccwpck_require__(7742);
+__nccwpck_require__(5921);
+
+
+
+exports.COMMANDS = commands.COMMANDS;
+exports.constructCommand = commands.constructCommand;
+exports.resolveCommand = commands.resolveCommand;
+exports.AGENTS = constants.AGENTS;
+exports.INSTALL_PAGE = constants.INSTALL_PAGE;
+exports.LOCKS = constants.LOCKS;
+exports.detect = detect.detect;
+exports.detectSync = detect.detectSync;
+exports.getUserAgent = detect.getUserAgent;
+
+
+/***/ }),
+
+/***/ 2040:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+const GET_IS_ASYNC = Symbol.for("quansync.getIsAsync");
+class QuansyncError extends Error {
+  constructor(message = "Unexpected promise in sync context") {
+    super(message);
+    this.name = "QuansyncError";
+  }
+}
+function isThenable(value) {
+  return value && typeof value === "object" && typeof value.then === "function";
+}
+function isQuansyncGenerator(value) {
+  return value && typeof value === "object" && typeof value[Symbol.iterator] === "function" && "__quansync" in value;
+}
+function fromObject(options) {
+  const generator = function* (...args) {
+    const isAsync = yield GET_IS_ASYNC;
+    if (isAsync)
+      return yield options.async.apply(this, args);
+    return options.sync.apply(this, args);
+  };
+  function fn(...args) {
+    const iter = generator.apply(this, args);
+    iter.then = (...thenArgs) => options.async.apply(this, args).then(...thenArgs);
+    iter.__quansync = true;
+    return iter;
+  }
+  fn.sync = options.sync;
+  fn.async = options.async;
+  return fn;
+}
+function fromPromise(promise) {
+  return fromObject({
+    async: () => Promise.resolve(promise),
+    sync: () => {
+      if (isThenable(promise))
+        throw new QuansyncError();
+      return promise;
+    }
+  });
+}
+function unwrapYield(value, isAsync) {
+  if (value === GET_IS_ASYNC)
+    return isAsync;
+  if (isQuansyncGenerator(value))
+    return isAsync ? iterateAsync(value) : iterateSync(value);
+  if (!isAsync && isThenable(value))
+    throw new QuansyncError();
+  return value;
+}
+function iterateSync(generator) {
+  let current = generator.next();
+  while (!current.done) {
+    try {
+      current = generator.next(unwrapYield(current.value));
+    } catch (err) {
+      current = generator.throw(err);
+    }
+  }
+  return unwrapYield(current.value);
+}
+async function iterateAsync(generator) {
+  let current = generator.next();
+  while (!current.done) {
+    try {
+      current = generator.next(await unwrapYield(current.value, true));
+    } catch (err) {
+      current = generator.throw(err);
+    }
+  }
+  return current.value;
+}
+function fromGeneratorFn(generatorFn) {
+  return fromObject({
+    name: generatorFn.name,
+    async(...args) {
+      return iterateAsync(generatorFn.apply(this, args));
+    },
+    sync(...args) {
+      return iterateSync(generatorFn.apply(this, args));
+    }
+  });
+}
+function quansync(options) {
+  if (isThenable(options))
+    return fromPromise(options);
+  if (typeof options === "function")
+    return fromGeneratorFn(options);
+  else
+    return fromObject(options);
+}
+function toGenerator(promise) {
+  if (isQuansyncGenerator(promise))
+    return promise;
+  return fromPromise(promise)();
+}
+
+exports.GET_IS_ASYNC = GET_IS_ASYNC;
+exports.QuansyncError = QuansyncError;
+exports.quansync = quansync;
+exports.toGenerator = toGenerator;
+
+
+/***/ }),
+
+/***/ 5921:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+
+const index = __nccwpck_require__(2040);
+
+const quansync = index.quansync;
+
+exports.quansync = quansync;
+
+
 /***/ })
 
 /******/ 	});
@@ -32379,7 +32847,7 @@ module.exports = parseParams
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(3109);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(399);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()
