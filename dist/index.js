@@ -30396,7 +30396,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const exec = __importStar(__nccwpck_require__(1514));
 const github_1 = __nccwpck_require__(5438);
-const package_manager_detector_1 = __nccwpck_require__(8509);
+const package_manager_detector_1 = __nccwpck_require__(3566);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
@@ -30591,30 +30591,6 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:events");
-
-/***/ }),
-
-/***/ 7561:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:fs");
-
-/***/ }),
-
-/***/ 9411:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:path");
-
-/***/ }),
-
-/***/ 7742:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:process");
 
 /***/ }),
 
@@ -32365,12 +32341,27 @@ module.exports = parseParams
 
 /***/ }),
 
-/***/ 8231:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 3566:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
 
+// EXPORTS
+__nccwpck_require__.d(__webpack_exports__, {
+  "AGENTS": () => (/* reexport */ AGENTS),
+  "COMMANDS": () => (/* reexport */ COMMANDS),
+  "INSTALL_METADATA": () => (/* reexport */ INSTALL_METADATA),
+  "INSTALL_PAGE": () => (/* reexport */ INSTALL_PAGE),
+  "LOCKS": () => (/* reexport */ LOCKS),
+  "constructCommand": () => (/* reexport */ constructCommand),
+  "detect": () => (/* reexport */ detect),
+  "getUserAgent": () => (/* reexport */ getUserAgent),
+  "resolveCommand": () => (/* reexport */ resolveCommand)
+});
 
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/commands.mjs
 function npmRun(agent) {
   return (args) => {
     if (args.length > 1) {
@@ -32497,19 +32488,9 @@ function constructCommand(value, args) {
   };
 }
 
-exports.COMMANDS = COMMANDS;
-exports.constructCommand = constructCommand;
-exports.resolveCommand = resolveCommand;
 
 
-/***/ }),
-
-/***/ 6980:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/constants.mjs
 const AGENTS = [
   "npm",
   "yarn",
@@ -32528,6 +32509,21 @@ const LOCKS = {
   "package-lock.json": "npm",
   "npm-shrinkwrap.json": "npm"
 };
+const INSTALL_METADATA = {
+  "node_modules/.deno/": "deno",
+  "node_modules/.pnpm/": "pnpm",
+  "node_modules/.yarn-state.yml": "yarn",
+  // yarn v2+ (node-modules)
+  "node_modules/.yarn_integrity": "yarn",
+  // yarn v1
+  "node_modules/.package-lock.json": "npm",
+  ".pnp.cjs": "yarn",
+  // yarn v3+ (pnp)
+  ".pnp.js": "yarn",
+  // yarn v2 (pnp)
+  "bun.lock": "bun",
+  "bun.lockb": "bun"
+};
 const INSTALL_PAGE = {
   "bun": "https://bun.sh",
   "deno": "https://deno.com",
@@ -32538,101 +32534,119 @@ const INSTALL_PAGE = {
   "npm": "https://docs.npmjs.com/cli/configuring-npm/install"
 };
 
-exports.AGENTS = AGENTS;
-exports.INSTALL_PAGE = INSTALL_PAGE;
-exports.LOCKS = LOCKS;
 
 
-/***/ }),
+;// CONCATENATED MODULE: external "node:fs/promises"
+const promises_namespaceObject = require("node:fs/promises");
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = require("node:path");
+;// CONCATENATED MODULE: external "node:process"
+const external_node_process_namespaceObject = require("node:process");
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/detect.mjs
 
-/***/ 4875:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
 
 
-const fs = __nccwpck_require__(7561);
-const path = __nccwpck_require__(9411);
-const process = __nccwpck_require__(7742);
-const macro = __nccwpck_require__(5921);
-const constants = __nccwpck_require__(6980);
 
-function _interopDefaultCompat (e) { return e && typeof e === 'object' && 'default' in e ? e.default : e; }
 
-const fs__default = /*#__PURE__*/_interopDefaultCompat(fs);
-const path__default = /*#__PURE__*/_interopDefaultCompat(path);
-const process__default = /*#__PURE__*/_interopDefaultCompat(process);
-
-const isFile = macro.quansync({
-  sync: (path2) => {
-    try {
-      return fs__default.statSync(path2).isFile();
-    } catch {
-      return false;
-    }
-  },
-  async: async (path2) => {
-    try {
-      return (await fs__default.promises.stat(path2)).isFile();
-    } catch {
-      return false;
-    }
+async function pathExists(path2, type) {
+  try {
+    const stat = await promises_namespaceObject.stat(path2);
+    return type === "file" ? stat.isFile() : stat.isDirectory();
+  } catch {
+    return false;
   }
-});
+}
 function getUserAgent() {
-  const userAgent = process__default.env.npm_config_user_agent;
+  const userAgent = external_node_process_namespaceObject.env.npm_config_user_agent;
   if (!userAgent) {
     return null;
   }
   const name = userAgent.split("/")[0];
-  return constants.AGENTS.includes(name) ? name : null;
+  return AGENTS.includes(name) ? name : null;
 }
-function* lookup(cwd = process__default.cwd()) {
-  let directory = path__default.resolve(cwd);
-  const { root } = path__default.parse(directory);
+function* lookup(cwd = external_node_process_namespaceObject.cwd()) {
+  let directory = external_node_path_namespaceObject.resolve(cwd);
+  const { root } = external_node_path_namespaceObject.parse(directory);
   while (directory && directory !== root) {
     yield directory;
-    directory = path__default.dirname(directory);
+    directory = external_node_path_namespaceObject.dirname(directory);
   }
 }
-const parsePackageJson = macro.quansync(function* (filepath, onUnknown) {
-  return !filepath || !(yield isFile(filepath)) ? null : handlePackageManager(filepath, onUnknown);
-});
-const detect = macro.quansync(function* (options = {}) {
-  const { cwd, onUnknown } = options;
+async function parsePackageJson(filepath, onUnknown) {
+  return !filepath || !pathExists(filepath, "file") ? null : await handlePackageManager(filepath, onUnknown);
+}
+async function detect(options = {}) {
+  const { cwd, strategies = ["lockfile", "packageManager-field", "devEngines-field"], onUnknown } = options;
   for (const directory of lookup(cwd)) {
-    for (const lock of Object.keys(constants.LOCKS)) {
-      if (yield isFile(path__default.join(directory, lock))) {
-        const name = constants.LOCKS[lock];
-        const result2 = yield parsePackageJson(path__default.join(directory, "package.json"), onUnknown);
-        if (result2)
-          return result2;
-        else
-          return { name, agent: name };
+    for (const strategy of strategies) {
+      switch (strategy) {
+        case "lockfile": {
+          for (const lock of Object.keys(LOCKS)) {
+            if (await pathExists(external_node_path_namespaceObject.join(directory, lock), "file")) {
+              const name = LOCKS[lock];
+              const result = await parsePackageJson(external_node_path_namespaceObject.join(directory, "package.json"), onUnknown);
+              if (result)
+                return result;
+              else
+                return { name, agent: name };
+            }
+          }
+          break;
+        }
+        case "packageManager-field":
+        case "devEngines-field": {
+          const result = await parsePackageJson(external_node_path_namespaceObject.join(directory, "package.json"), onUnknown);
+          if (result)
+            return result;
+          break;
+        }
+        case "install-metadata": {
+          for (const metadata of Object.keys(INSTALL_METADATA)) {
+            const fileOrDir = metadata.endsWith("/") ? "dir" : "file";
+            if (await pathExists(external_node_path_namespaceObject.join(directory, metadata), fileOrDir)) {
+              const name = INSTALL_METADATA[metadata];
+              const agent = name === "yarn" ? isMetadataYarnClassic(metadata) ? "yarn" : "yarn@berry" : name;
+              return { name, agent };
+            }
+          }
+          break;
+        }
       }
     }
-    const result = yield parsePackageJson(path__default.join(directory, "package.json"), onUnknown);
-    if (result)
-      return result;
   }
   return null;
-});
-const detectSync = detect.sync;
-function handlePackageManager(filepath, onUnknown) {
+}
+function getNameAndVer(pkg) {
+  const handelVer = (version) => version?.match(/\d+(\.\d+){0,2}/)?.[0] ?? version;
+  if (typeof pkg.packageManager === "string") {
+    const [name, ver] = pkg.packageManager.replace(/^\^/, "").split("@");
+    return { name, ver: handelVer(ver) };
+  }
+  if (typeof pkg.devEngines?.packageManager?.name === "string") {
+    return {
+      name: pkg.devEngines.packageManager.name,
+      ver: handelVer(pkg.devEngines.packageManager.version)
+    };
+  }
+  return void 0;
+}
+async function handlePackageManager(filepath, onUnknown) {
   try {
-    const pkg = JSON.parse(fs__default.readFileSync(filepath, "utf8"));
+    const pkg = JSON.parse(await promises_namespaceObject.readFile(filepath, "utf8"));
     let agent;
-    if (typeof pkg.packageManager === "string") {
-      const [name, ver] = pkg.packageManager.replace(/^\^/, "").split("@");
+    const nameAndVer = getNameAndVer(pkg);
+    if (nameAndVer) {
+      const name = nameAndVer.name;
+      const ver = nameAndVer.ver;
       let version = ver;
-      if (name === "yarn" && Number.parseInt(ver) > 1) {
+      if (name === "yarn" && ver && Number.parseInt(ver) > 1) {
         agent = "yarn@berry";
         version = "berry";
         return { name, agent, version };
-      } else if (name === "pnpm" && Number.parseInt(ver) < 7) {
+      } else if (name === "pnpm" && ver && Number.parseInt(ver) < 7) {
         agent = "pnpm@6";
         return { name, agent, version };
-      } else if (constants.AGENTS.includes(name)) {
+      } else if (AGENTS.includes(name)) {
         agent = name;
         return { name, agent, version };
       } else {
@@ -32643,164 +32657,19 @@ function handlePackageManager(filepath, onUnknown) {
   }
   return null;
 }
-
-exports.detect = detect;
-exports.detectSync = detectSync;
-exports.getUserAgent = getUserAgent;
-
-
-/***/ }),
-
-/***/ 8509:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const commands = __nccwpck_require__(8231);
-const constants = __nccwpck_require__(6980);
-const detect = __nccwpck_require__(4875);
-__nccwpck_require__(7561);
-__nccwpck_require__(9411);
-__nccwpck_require__(7742);
-__nccwpck_require__(5921);
-
-
-
-exports.COMMANDS = commands.COMMANDS;
-exports.constructCommand = commands.constructCommand;
-exports.resolveCommand = commands.resolveCommand;
-exports.AGENTS = constants.AGENTS;
-exports.INSTALL_PAGE = constants.INSTALL_PAGE;
-exports.LOCKS = constants.LOCKS;
-exports.detect = detect.detect;
-exports.detectSync = detect.detectSync;
-exports.getUserAgent = detect.getUserAgent;
-
-
-/***/ }),
-
-/***/ 2040:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-const GET_IS_ASYNC = Symbol.for("quansync.getIsAsync");
-class QuansyncError extends Error {
-  constructor(message = "Unexpected promise in sync context") {
-    super(message);
-    this.name = "QuansyncError";
-  }
-}
-function isThenable(value) {
-  return value && typeof value === "object" && typeof value.then === "function";
-}
-function isQuansyncGenerator(value) {
-  return value && typeof value === "object" && typeof value[Symbol.iterator] === "function" && "__quansync" in value;
-}
-function fromObject(options) {
-  const generator = function* (...args) {
-    const isAsync = yield GET_IS_ASYNC;
-    if (isAsync)
-      return yield options.async.apply(this, args);
-    return options.sync.apply(this, args);
-  };
-  function fn(...args) {
-    const iter = generator.apply(this, args);
-    iter.then = (...thenArgs) => options.async.apply(this, args).then(...thenArgs);
-    iter.__quansync = true;
-    return iter;
-  }
-  fn.sync = options.sync;
-  fn.async = options.async;
-  return fn;
-}
-function fromPromise(promise) {
-  return fromObject({
-    async: () => Promise.resolve(promise),
-    sync: () => {
-      if (isThenable(promise))
-        throw new QuansyncError();
-      return promise;
-    }
-  });
-}
-function unwrapYield(value, isAsync) {
-  if (value === GET_IS_ASYNC)
-    return isAsync;
-  if (isQuansyncGenerator(value))
-    return isAsync ? iterateAsync(value) : iterateSync(value);
-  if (!isAsync && isThenable(value))
-    throw new QuansyncError();
-  return value;
-}
-function iterateSync(generator) {
-  let current = generator.next();
-  while (!current.done) {
-    try {
-      current = generator.next(unwrapYield(current.value));
-    } catch (err) {
-      current = generator.throw(err);
-    }
-  }
-  return unwrapYield(current.value);
-}
-async function iterateAsync(generator) {
-  let current = generator.next();
-  while (!current.done) {
-    try {
-      current = generator.next(await unwrapYield(current.value, true));
-    } catch (err) {
-      current = generator.throw(err);
-    }
-  }
-  return current.value;
-}
-function fromGeneratorFn(generatorFn) {
-  return fromObject({
-    name: generatorFn.name,
-    async(...args) {
-      return iterateAsync(generatorFn.apply(this, args));
-    },
-    sync(...args) {
-      return iterateSync(generatorFn.apply(this, args));
-    }
-  });
-}
-function quansync(options) {
-  if (isThenable(options))
-    return fromPromise(options);
-  if (typeof options === "function")
-    return fromGeneratorFn(options);
-  else
-    return fromObject(options);
-}
-function toGenerator(promise) {
-  if (isQuansyncGenerator(promise))
-    return promise;
-  return fromPromise(promise)();
+function isMetadataYarnClassic(metadataPath) {
+  return metadataPath.endsWith(".yarn_integrity");
 }
 
-exports.GET_IS_ASYNC = GET_IS_ASYNC;
-exports.QuansyncError = QuansyncError;
-exports.quansync = quansync;
-exports.toGenerator = toGenerator;
 
 
-/***/ }),
-
-/***/ 5921:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/index.mjs
 
 
-const index = __nccwpck_require__(2040);
 
-const quansync = index.quansync;
 
-exports.quansync = quansync;
+
+
 
 
 /***/ })
@@ -32838,6 +32707,34 @@ exports.quansync = quansync;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
