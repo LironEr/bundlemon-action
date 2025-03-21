@@ -1,129 +1,6 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 3109:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__nccwpck_require__(2186));
-const exec = __importStar(__nccwpck_require__(1514));
-const github_1 = __nccwpck_require__(5438);
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
-        try {
-            setEnvVars();
-            yield runCli();
-        }
-        catch (error) {
-            core.error('Error occurred while running BundleMon CLI');
-            if (error instanceof Error) {
-                if (shouldFail) {
-                    core.setFailed(error.message);
-                }
-                else {
-                    core.error(error.message);
-                }
-            }
-        }
-    });
-}
-function setEnvVars() {
-    var _a, _b;
-    core.info('set environment vars for BundleMon CLI');
-    const { payload } = github_1.context;
-    const pr = payload.pull_request;
-    const commitSha = ((_a = pr === null || pr === void 0 ? void 0 : pr.head) === null || _a === void 0 ? void 0 : _a.sha) || github_1.context.sha;
-    const commitMsg = ((_b = github_1.context.payload.head_commit) === null || _b === void 0 ? void 0 : _b.message) || '';
-    if (commitSha) {
-        core.info('set env variable: CI_COMMIT_SHA');
-        core.exportVariable('CI_COMMIT_SHA', commitSha);
-    }
-    if (commitMsg) {
-        core.info('set env variable: CI_COMMIT_MESSAGE');
-        core.exportVariable('CI_COMMIT_MESSAGE', commitMsg);
-    }
-}
-function parseArgs(input) {
-    var _a;
-    if (!input) {
-        return [];
-    }
-    const regex = new RegExp('"[^"]+"|[\\S]+', 'g');
-    const args = [];
-    (_a = input.match(regex)) === null || _a === void 0 ? void 0 : _a.forEach((element) => {
-        if (!element)
-            return;
-        return args.push(element.replace(/"/g, ''));
-    });
-    return args;
-}
-function getBundlemonBin() {
-    const version = core.getInput('bundlemon-version');
-    return 'bundlemon'.concat(version ? `@${version}` : '');
-}
-function runCli() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const workingDirectory = core.getInput('working-directory');
-        const bundlemonArgs = parseArgs(core.getInput('bundlemon-args'));
-        const options = {
-            listeners: {
-                stdout: (data) => {
-                    core.info(data.toString());
-                },
-                stderr: (data) => {
-                    core.info(data.toString());
-                },
-            },
-        };
-        if (workingDirectory) {
-            options.cwd = workingDirectory;
-            core.info(`Working directory: ${workingDirectory}`);
-        }
-        const args = [getBundlemonBin(), ...bundlemonArgs];
-        core.info(`Running: npx ${args.join(' ')}`);
-        yield exec.exec('npx', args, options);
-    });
-}
-run();
-
-
-/***/ }),
-
 /***/ 7351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -30478,6 +30355,133 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__nccwpck_require__(2186));
+const exec = __importStar(__nccwpck_require__(1514));
+const github_1 = __nccwpck_require__(5438);
+const package_manager_detector_1 = __nccwpck_require__(3566);
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
+        try {
+            setEnvVars();
+            yield runCli();
+        }
+        catch (error) {
+            core.error('Error occurred while running BundleMon CLI');
+            if (error instanceof Error) {
+                if (shouldFail) {
+                    core.setFailed(error.message);
+                }
+                else {
+                    core.error(error.message);
+                }
+            }
+        }
+    });
+}
+function setEnvVars() {
+    var _a, _b;
+    core.info('set environment vars for BundleMon CLI');
+    const { payload } = github_1.context;
+    const pr = payload.pull_request;
+    const commitSha = ((_a = pr === null || pr === void 0 ? void 0 : pr.head) === null || _a === void 0 ? void 0 : _a.sha) || github_1.context.sha;
+    const commitMsg = ((_b = github_1.context.payload.head_commit) === null || _b === void 0 ? void 0 : _b.message) || '';
+    if (commitSha) {
+        core.info('set env variable: CI_COMMIT_SHA');
+        core.exportVariable('CI_COMMIT_SHA', commitSha);
+    }
+    if (commitMsg) {
+        core.info('set env variable: CI_COMMIT_MESSAGE');
+        core.exportVariable('CI_COMMIT_MESSAGE', commitMsg);
+    }
+}
+function parseArgs(input) {
+    var _a;
+    if (!input) {
+        return [];
+    }
+    const regex = new RegExp('"[^"]+"|[\\S]+', 'g');
+    const args = [];
+    (_a = input.match(regex)) === null || _a === void 0 ? void 0 : _a.forEach((element) => {
+        if (!element)
+            return;
+        return args.push(element.replace(/"/g, ''));
+    });
+    return args;
+}
+function getBundlemonBin() {
+    const version = core.getInput('bundlemon-version');
+    return 'bundlemon'.concat(version ? `@${version}` : '');
+}
+function runCli() {
+    var _a;
+    return __awaiter(this, void 0, void 0, function* () {
+        const workingDirectory = core.getInput('working-directory');
+        const bundlemonArgs = parseArgs(core.getInput('bundlemon-args'));
+        const options = {
+            listeners: {
+                stdout: (data) => {
+                    core.info(data.toString());
+                },
+                stderr: (data) => {
+                    core.info(data.toString());
+                },
+            },
+        };
+        if (workingDirectory) {
+            options.cwd = workingDirectory;
+            core.info(`Working directory: ${workingDirectory}`);
+        }
+        const args = [getBundlemonBin(), ...bundlemonArgs];
+        const pm = yield (0, package_manager_detector_1.detect)();
+        const command = (0, package_manager_detector_1.resolveCommand)((_a = pm === null || pm === void 0 ? void 0 : pm.agent) !== null && _a !== void 0 ? _a : 'npm', 'execute', args);
+        core.info(`Running: ${command.command} ${command.args.join(' ')}`);
+        yield exec.exec(command.command, command.args, options);
+    });
+}
+run();
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -32335,6 +32339,339 @@ function parseParams (str) {
 module.exports = parseParams
 
 
+/***/ }),
+
+/***/ 3566:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
+
+// EXPORTS
+__nccwpck_require__.d(__webpack_exports__, {
+  "AGENTS": () => (/* reexport */ AGENTS),
+  "COMMANDS": () => (/* reexport */ COMMANDS),
+  "INSTALL_METADATA": () => (/* reexport */ INSTALL_METADATA),
+  "INSTALL_PAGE": () => (/* reexport */ INSTALL_PAGE),
+  "LOCKS": () => (/* reexport */ LOCKS),
+  "constructCommand": () => (/* reexport */ constructCommand),
+  "detect": () => (/* reexport */ detect),
+  "getUserAgent": () => (/* reexport */ getUserAgent),
+  "resolveCommand": () => (/* reexport */ resolveCommand)
+});
+
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/commands.mjs
+function npmRun(agent) {
+  return (args) => {
+    if (args.length > 1) {
+      return [agent, "run", args[0], "--", ...args.slice(1)];
+    } else {
+      return [agent, "run", args[0]];
+    }
+  };
+}
+function denoExecute() {
+  return (args) => {
+    return ["deno", "run", `npm:${args[0]}`, ...args.slice(1)];
+  };
+}
+const npm = {
+  "agent": ["npm", 0],
+  "run": npmRun("npm"),
+  "install": ["npm", "i", 0],
+  "frozen": ["npm", "ci", 0],
+  "global": ["npm", "i", "-g", 0],
+  "add": ["npm", "i", 0],
+  "upgrade": ["npm", "update", 0],
+  "upgrade-interactive": null,
+  "execute": ["npx", 0],
+  "execute-local": ["npx", 0],
+  "uninstall": ["npm", "uninstall", 0],
+  "global_uninstall": ["npm", "uninstall", "-g", 0]
+};
+const yarn = {
+  "agent": ["yarn", 0],
+  "run": ["yarn", "run", 0],
+  "install": ["yarn", "install", 0],
+  "frozen": ["yarn", "install", "--frozen-lockfile", 0],
+  "global": ["yarn", "global", "add", 0],
+  "add": ["yarn", "add", 0],
+  "upgrade": ["yarn", "upgrade", 0],
+  "upgrade-interactive": ["yarn", "upgrade-interactive", 0],
+  "execute": ["npx", 0],
+  "execute-local": ["yarn", "exec", 0],
+  "uninstall": ["yarn", "remove", 0],
+  "global_uninstall": ["yarn", "global", "remove", 0]
+};
+const yarnBerry = {
+  ...yarn,
+  "frozen": ["yarn", "install", "--immutable", 0],
+  "upgrade": ["yarn", "up", 0],
+  "upgrade-interactive": ["yarn", "up", "-i", 0],
+  "execute": ["yarn", "dlx", 0],
+  "execute-local": ["yarn", "exec", 0],
+  // Yarn 2+ removed 'global', see https://github.com/yarnpkg/berry/issues/821
+  "global": ["npm", "i", "-g", 0],
+  "global_uninstall": ["npm", "uninstall", "-g", 0]
+};
+const pnpm = {
+  "agent": ["pnpm", 0],
+  "run": ["pnpm", "run", 0],
+  "install": ["pnpm", "i", 0],
+  "frozen": ["pnpm", "i", "--frozen-lockfile", 0],
+  "global": ["pnpm", "add", "-g", 0],
+  "add": ["pnpm", "add", 0],
+  "upgrade": ["pnpm", "update", 0],
+  "upgrade-interactive": ["pnpm", "update", "-i", 0],
+  "execute": ["pnpm", "dlx", 0],
+  "execute-local": ["pnpm", "exec", 0],
+  "uninstall": ["pnpm", "remove", 0],
+  "global_uninstall": ["pnpm", "remove", "--global", 0]
+};
+const bun = {
+  "agent": ["bun", 0],
+  "run": ["bun", "run", 0],
+  "install": ["bun", "install", 0],
+  "frozen": ["bun", "install", "--frozen-lockfile", 0],
+  "global": ["bun", "add", "-g", 0],
+  "add": ["bun", "add", 0],
+  "upgrade": ["bun", "update", 0],
+  "upgrade-interactive": ["bun", "update", 0],
+  "execute": ["bun", "x", 0],
+  "execute-local": ["bun", "x", 0],
+  "uninstall": ["bun", "remove", 0],
+  "global_uninstall": ["bun", "remove", "-g", 0]
+};
+const deno = {
+  "agent": ["deno", 0],
+  "run": ["deno", "task", 0],
+  "install": ["deno", "install", 0],
+  "frozen": ["deno", "install", "--frozen", 0],
+  "global": ["deno", "install", "-g", 0],
+  "add": ["deno", "add", 0],
+  "upgrade": ["deno", "outdated", "--update", 0],
+  "upgrade-interactive": ["deno", "outdated", "--update", 0],
+  "execute": denoExecute(),
+  "execute-local": ["deno", "task", "--eval", 0],
+  "uninstall": ["deno", "remove", 0],
+  "global_uninstall": ["deno", "uninstall", "-g", 0]
+};
+const COMMANDS = {
+  "npm": npm,
+  "yarn": yarn,
+  "yarn@berry": yarnBerry,
+  "pnpm": pnpm,
+  // pnpm v6.x or below
+  "pnpm@6": {
+    ...pnpm,
+    run: npmRun("pnpm")
+  },
+  "bun": bun,
+  "deno": deno
+};
+function resolveCommand(agent, command, args) {
+  const value = COMMANDS[agent][command];
+  return constructCommand(value, args);
+}
+function constructCommand(value, args) {
+  if (value == null)
+    return null;
+  const list = typeof value === "function" ? value(args) : value.flatMap((v) => {
+    if (typeof v === "number")
+      return args;
+    return [v];
+  });
+  return {
+    command: list[0],
+    args: list.slice(1)
+  };
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/constants.mjs
+const AGENTS = [
+  "npm",
+  "yarn",
+  "yarn@berry",
+  "pnpm",
+  "pnpm@6",
+  "bun",
+  "deno"
+];
+const LOCKS = {
+  "bun.lock": "bun",
+  "bun.lockb": "bun",
+  "deno.lock": "deno",
+  "pnpm-lock.yaml": "pnpm",
+  "yarn.lock": "yarn",
+  "package-lock.json": "npm",
+  "npm-shrinkwrap.json": "npm"
+};
+const INSTALL_METADATA = {
+  "node_modules/.deno/": "deno",
+  "node_modules/.pnpm/": "pnpm",
+  "node_modules/.yarn-state.yml": "yarn",
+  // yarn v2+ (node-modules)
+  "node_modules/.yarn_integrity": "yarn",
+  // yarn v1
+  "node_modules/.package-lock.json": "npm",
+  ".pnp.cjs": "yarn",
+  // yarn v3+ (pnp)
+  ".pnp.js": "yarn",
+  // yarn v2 (pnp)
+  "bun.lock": "bun",
+  "bun.lockb": "bun"
+};
+const INSTALL_PAGE = {
+  "bun": "https://bun.sh",
+  "deno": "https://deno.com",
+  "pnpm": "https://pnpm.io/installation",
+  "pnpm@6": "https://pnpm.io/6.x/installation",
+  "yarn": "https://classic.yarnpkg.com/en/docs/install",
+  "yarn@berry": "https://yarnpkg.com/getting-started/install",
+  "npm": "https://docs.npmjs.com/cli/configuring-npm/install"
+};
+
+
+
+;// CONCATENATED MODULE: external "node:fs/promises"
+const promises_namespaceObject = require("node:fs/promises");
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = require("node:path");
+;// CONCATENATED MODULE: external "node:process"
+const external_node_process_namespaceObject = require("node:process");
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/detect.mjs
+
+
+
+
+
+async function pathExists(path2, type) {
+  try {
+    const stat = await promises_namespaceObject.stat(path2);
+    return type === "file" ? stat.isFile() : stat.isDirectory();
+  } catch {
+    return false;
+  }
+}
+function getUserAgent() {
+  const userAgent = external_node_process_namespaceObject.env.npm_config_user_agent;
+  if (!userAgent) {
+    return null;
+  }
+  const name = userAgent.split("/")[0];
+  return AGENTS.includes(name) ? name : null;
+}
+function* lookup(cwd = external_node_process_namespaceObject.cwd()) {
+  let directory = external_node_path_namespaceObject.resolve(cwd);
+  const { root } = external_node_path_namespaceObject.parse(directory);
+  while (directory && directory !== root) {
+    yield directory;
+    directory = external_node_path_namespaceObject.dirname(directory);
+  }
+}
+async function parsePackageJson(filepath, onUnknown) {
+  return !filepath || !pathExists(filepath, "file") ? null : await handlePackageManager(filepath, onUnknown);
+}
+async function detect(options = {}) {
+  const { cwd, strategies = ["lockfile", "packageManager-field", "devEngines-field"], onUnknown } = options;
+  for (const directory of lookup(cwd)) {
+    for (const strategy of strategies) {
+      switch (strategy) {
+        case "lockfile": {
+          for (const lock of Object.keys(LOCKS)) {
+            if (await pathExists(external_node_path_namespaceObject.join(directory, lock), "file")) {
+              const name = LOCKS[lock];
+              const result = await parsePackageJson(external_node_path_namespaceObject.join(directory, "package.json"), onUnknown);
+              if (result)
+                return result;
+              else
+                return { name, agent: name };
+            }
+          }
+          break;
+        }
+        case "packageManager-field":
+        case "devEngines-field": {
+          const result = await parsePackageJson(external_node_path_namespaceObject.join(directory, "package.json"), onUnknown);
+          if (result)
+            return result;
+          break;
+        }
+        case "install-metadata": {
+          for (const metadata of Object.keys(INSTALL_METADATA)) {
+            const fileOrDir = metadata.endsWith("/") ? "dir" : "file";
+            if (await pathExists(external_node_path_namespaceObject.join(directory, metadata), fileOrDir)) {
+              const name = INSTALL_METADATA[metadata];
+              const agent = name === "yarn" ? isMetadataYarnClassic(metadata) ? "yarn" : "yarn@berry" : name;
+              return { name, agent };
+            }
+          }
+          break;
+        }
+      }
+    }
+  }
+  return null;
+}
+function getNameAndVer(pkg) {
+  const handelVer = (version) => version?.match(/\d+(\.\d+){0,2}/)?.[0] ?? version;
+  if (typeof pkg.packageManager === "string") {
+    const [name, ver] = pkg.packageManager.replace(/^\^/, "").split("@");
+    return { name, ver: handelVer(ver) };
+  }
+  if (typeof pkg.devEngines?.packageManager?.name === "string") {
+    return {
+      name: pkg.devEngines.packageManager.name,
+      ver: handelVer(pkg.devEngines.packageManager.version)
+    };
+  }
+  return void 0;
+}
+async function handlePackageManager(filepath, onUnknown) {
+  try {
+    const pkg = JSON.parse(await promises_namespaceObject.readFile(filepath, "utf8"));
+    let agent;
+    const nameAndVer = getNameAndVer(pkg);
+    if (nameAndVer) {
+      const name = nameAndVer.name;
+      const ver = nameAndVer.ver;
+      let version = ver;
+      if (name === "yarn" && ver && Number.parseInt(ver) > 1) {
+        agent = "yarn@berry";
+        version = "berry";
+        return { name, agent, version };
+      } else if (name === "pnpm" && ver && Number.parseInt(ver) < 7) {
+        agent = "pnpm@6";
+        return { name, agent, version };
+      } else if (AGENTS.includes(name)) {
+        agent = name;
+        return { name, agent, version };
+      } else {
+        return onUnknown?.(pkg.packageManager) ?? null;
+      }
+    }
+  } catch {
+  }
+  return null;
+}
+function isMetadataYarnClassic(metadataPath) {
+  return metadataPath.endsWith(".yarn_integrity");
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/package-manager-detector/dist/index.mjs
+
+
+
+
+
+
+
+
 /***/ })
 
 /******/ 	});
@@ -32370,6 +32707,34 @@ module.exports = parseParams
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
@@ -32379,7 +32744,7 @@ module.exports = parseParams
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(3109);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(399);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()

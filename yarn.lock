@@ -5511,6 +5511,11 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
+package-manager-detector@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-1.1.0.tgz#2c9f19adb9835d0b9e9baaab484a020d4ee07b87"
+  integrity sha512-Y8f9qUlBzW8qauJjd/eu6jlpJZsuPJm2ZAV0cDVd420o4EdpH5RPdoCv+60/TdJflGatr4sDfpAL6ArWZbM5tA==
+
 pacote@^17.0.0, pacote@^17.0.4, pacote@^17.0.6:
   version "17.0.6"
   resolved "https://registry.yarnpkg.com/pacote/-/pacote-17.0.6.tgz#874bb59cda5d44ab784d0b6530fcb4a7d9b76a60"

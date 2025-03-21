@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import { context } from '@actions/github';
+import { detect, resolveCommand } from 'package-manager-detector';
 
 async function run(): Promise<void> {
   const shouldFail = (core.getInput('fail-on-error') || 'true') === 'true';
@@ -85,9 +86,12 @@ async function runCli() {
 
   const args = [getBundlemonBin(), ...bundlemonArgs];
 
-  core.info(`Running: npx ${args.join(' ')}`);
+  const pm = await detect();
+  const command = resolveCommand(pm?.agent ?? 'npm', 'execute', args)!;
 
-  await exec.exec('npx', args, options);
+  core.info(`Running: ${command.command} ${command.args.join(' ')}`);
+
+  await exec.exec(command.command, command.args, options);
 }
 
 run();
