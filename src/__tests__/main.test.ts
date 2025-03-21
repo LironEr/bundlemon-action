@@ -33,7 +33,7 @@ const execCommand = async (
   });
 };
 
-const MAIN_ACTION_FILE = path.join(__dirname, '..', '..', 'lib', 'main.js');
+const MAIN_ACTION_FILE = path.join(__dirname, '..', '..', 'dist', 'index.js');
 
 describe('action', () => {
   test('config file not found', async () => {
@@ -61,6 +61,7 @@ describe('action', () => {
 
     expect(code).toBe(0);
     expect(stdout).toContain('2.0.0');
+    expect(stdout).toContain('Running: npx bundlemon@2.0.0 --version');
   });
 
   test('fail on error - false', async () => {
