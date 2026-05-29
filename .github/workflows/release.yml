@@ -18,10 +18,10 @@ jobs:
           # https://github.com/semantic-release/semantic-release/blob/278d8e6bec766ba694aa00f5503fb49df753f4b8/docs/recipes/ci-configurations/github-actions.md#pushing-packagejson-changes-to-a-master-branch
           persist-credentials: false
 
-      - name: Set Node.js 20.x
+      - name: Set Node.js 24.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 24.x
 
       - name: Install dependencies
         run: yarn
